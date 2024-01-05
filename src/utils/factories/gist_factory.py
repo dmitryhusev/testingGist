@@ -1,5 +1,5 @@
 import requests
-
+import allure
 from src.utils import data_models
 from src.utils.request_builder import RequestBuilder
 
@@ -45,7 +45,7 @@ class RequestGistFactory:
         res = RequestBuilder().delete(url=f'{cls.default_url}/{gist_id}')
         assert res.status_code == 204, f'Current status code is {res.status_code}'
 
-
+@allure.step
 def validate_gist(response: requests.Response) -> data_models.Gist:
     validated = data_models.Gist(
         id_=response.json().get('id'),
