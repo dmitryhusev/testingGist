@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 from src.utils.factories.gist_factory import RequestGistFactory, validate_gist
 from src.utils.helpers import create_several_gists
 from src.utils.request_builder import RequestBuilder
@@ -32,11 +32,11 @@ def test_gists_page(cleanup_gist):
 
 
 def test_gists_since(cleanup_gist):
-    time = datetime.datetime.now(tz=datetime.timezone.utc).replace(microsecond=0).isoformat()
+    time = datetime.now(tz=timezone.utc).replace(microsecond=0).isoformat()
     gist = RequestGistFactory.post_gist()
-    cleanup_gist(gist.id_)
     params = {'since': time}
     res = RequestGistFactory.get_all_gists(params=params)
+    cleanup_gist(gist.id_)
     assert len(res) > 0
 
 
@@ -46,5 +46,3 @@ def test_get_gist(create_gist):
     res = RequestBuilder().get(url)
     assert res.status_code == 200, f'Unable to get gist, current status code is {res.status_code}'
     validate_gist(res)
-
-

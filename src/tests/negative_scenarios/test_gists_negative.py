@@ -1,6 +1,9 @@
+from faker import Faker
+import pytest
 from src.utils.factories.gist_factory import RequestGistFactory
 from src.utils.request_builder import RequestBuilder
-from faker import Faker
+
+pytestmark = pytest.mark.negative
 
 URL = 'https://api.github.com/gists'
 
@@ -15,6 +18,7 @@ def test_gist_invalid_payload():
     invalid_payload = {'hello': 'world'}
     res = RequestBuilder().post(URL, invalid_payload)
     assert res.status_code == 422
+
 
 def test_gist_incorrect_page_number(create_gist):
     # The number of results per page (max 100), meaning that page 101 should not exist and res is empty
@@ -49,4 +53,11 @@ def test_update_not_existing_gist():
 def test_delete_not_existing_gist():
     invalid_gist_id = ''
     res = RequestBuilder().delete(url=f'{URL}/{invalid_gist_id}')
+    assert res.status_code == 404
+
+
+def test_gist_not_starred(create_gist):
+    gist_id = create_gist.id_
+    url = f'https://api.github.com/gists/{gist_id}/star'
+    res = RequestBuilder().get(url)
     assert res.status_code == 404

@@ -33,8 +33,3 @@ def create_gists():
     if len(ids) > 0:
         for id_ in ids:
             RequestGistFactory.delete_gist(id_)
-
-
-
-
-
