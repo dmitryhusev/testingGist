@@ -18,5 +18,12 @@ def test_gist_invalid_payload():
 def test_gist_incorrect_page_number(create_gist):
     # The number of results per page (max 100), meaning that page 101 should not exist and res is empty
     params = {'page': 101}
-    res = RequestGistFactory.get_all_gists(params)
+    res = RequestGistFactory.get_all_gists(params=params)
     assert not res
+
+
+def test_public_gists_max_amount_exceeded():
+    url = 'https://api.github.com/gists/public'
+    params = {'page': 101}
+    res = RequestBuilder().get(url, params=params)
+    assert res.status_code == 422

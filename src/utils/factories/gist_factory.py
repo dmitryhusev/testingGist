@@ -5,12 +5,13 @@ from src.utils.request_builder import RequestBuilder
 
 
 class RequestGistFactory:
-    url = 'https://api.github.com/gists'
+    default_url = 'https://api.github.com/gists'
 
     @classmethod
-    def get_all_gists(cls, params: dict | None = None):
-        res = RequestBuilder().get(cls.url, params=params)
-        assert res.status_code == 200
+    def get_all_gists(cls, url: str = None, params: dict | None = None):
+        url = url if url else cls.default_url
+        res = RequestBuilder().get(url, params=params)
+        assert res.status_code == 200, f'Current status code is {res.status_code}'
         return [i['id'] for i in res.json()]
 
     @classmethod
@@ -27,7 +28,7 @@ class RequestGistFactory:
                 }
         }
         body = body if body else payload
-        res = RequestBuilder().post(cls.url, body)
+        res = RequestBuilder().post(cls.default_url, body)
         assert res.status_code == 201, f'Gist is not created, status code is {res.status_code}'
         validated = validate_gist_creation(res)
         return validated
@@ -35,14 +36,14 @@ class RequestGistFactory:
     @classmethod
     def update_gist(cls, gist_id: str) -> data_models.Gist:
         data = '{"description":"An updated gist description","files":{"README.md":{"content":"Hello World from GitHub"}}}'
-        res = RequestBuilder().update(url=f'{cls.url}/{gist_id}', data=data)
+        res = RequestBuilder().update(url=f'{cls.default_url}/{gist_id}', data=data)
         assert res.status_code == 200, f'Gist is not created, status code is {res.status_code}'
         validated = validate_gist_creation(res)
         return validated
 
     @classmethod
     def delete_gist(cls, gist_id):
-        res = RequestBuilder().delete(url=f'{cls.url}/{gist_id}')
+        res = RequestBuilder().delete(url=f'{cls.default_url}/{gist_id}')
         assert res.status_code == 204
 
 

@@ -18,7 +18,7 @@ def test_gists_per_page(cleanup_gist):
     gists = create_several_gists(35)
     cleanup_gist(*gists)
     params = {'per_page': 35}
-    res = RequestGistFactory.get_all_gists(params)
+    res = RequestGistFactory.get_all_gists(params=params)
     assert len(res) >= 35
 
 
@@ -26,7 +26,7 @@ def test_gists_page(cleanup_gist):
     gists = create_several_gists(35)
     cleanup_gist(*gists)
     params = {'page': 2}
-    res = RequestGistFactory.get_all_gists(params)
+    res = RequestGistFactory.get_all_gists(params=params)
     assert len(res) >= 5
 
 
@@ -35,5 +35,5 @@ def test_gists_since(cleanup_gist):
     gist = RequestGistFactory.post_gist()
     cleanup_gist(gist.id_)
     params = {'since': time}
-    res = RequestGistFactory.get_all_gists(params)
+    res = RequestGistFactory.get_all_gists(params=params)
     assert len(res) > 0
