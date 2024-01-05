@@ -1,6 +1,5 @@
-from src.utils.factories.gist_factory import RequestGistFactory
 import datetime
-
+from src.utils.factories.gist_factory import RequestGistFactory
 from src.utils.helpers import create_several_gists
 
 
@@ -12,6 +11,10 @@ def test_gists_for_authenticated_user(create_gists):
 
 
 def test_gists_per_page(cleanup_gist):
+    """
+    The number of results per page (max 100)
+    Default: 30
+    """
     gists = create_several_gists(35)
     cleanup_gist(*gists)
     params = {'per_page': 35}
