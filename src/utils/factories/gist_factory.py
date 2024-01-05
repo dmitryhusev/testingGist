@@ -36,14 +36,14 @@ class RequestGistFactory:
     @classmethod
     def update_gist(cls, gist_id: str, payload: dict) -> data_models.Gist:
         res = RequestBuilder().update(url=f'{cls.default_url}/{gist_id}', data=payload)
-        assert res.status_code == 200, f'Gist is not created, status code is {res.status_code}'
+        assert res.status_code == 200, f'Gist is not updated, status code is {res.status_code}'
         validated = validate_gist(res)
         return validated
 
     @classmethod
     def delete_gist(cls, gist_id):
         res = RequestBuilder().delete(url=f'{cls.default_url}/{gist_id}')
-        assert res.status_code == 204
+        assert res.status_code == 204, f'Current status code is {res.status_code}'
 
 
 def validate_gist(response: requests.Response) -> data_models.Gist:

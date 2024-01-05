@@ -1,5 +1,6 @@
 from src.utils.factories.gist_factory import RequestGistFactory
 from src.utils.request_builder import RequestBuilder
+from faker import Faker
 
 URL = 'https://api.github.com/gists'
 
@@ -23,7 +24,7 @@ def test_gist_incorrect_page_number(create_gist):
 
 
 def test_public_gists_max_amount_exceeded():
-    url = 'https://api.github.com/gists/public'
+    url = f'{URL}/public'
     params = {'page': 101}
     res = RequestBuilder().get(url, params=params)
     assert res.status_code == 422
@@ -31,6 +32,21 @@ def test_public_gists_max_amount_exceeded():
 
 def test_get_not_existing_gist():
     invalid_gist_id = ''
-    url = f'https://api.github.com/gists/{invalid_gist_id}'
+    url = f'{URL}/{invalid_gist_id}'
     res = RequestBuilder().get(url)
+    assert res.status_code == 404
+
+
+def test_update_not_existing_gist():
+    invalid_gist_id = ''
+    url = f'{URL}/{invalid_gist_id}'
+    new_description = Faker().slug()
+    payload = {"description": new_description}
+    res = RequestBuilder().update(url, data=payload)
+    assert res.status_code == 404
+
+
+def test_delete_not_existing_gist():
+    invalid_gist_id = ''
+    res = RequestBuilder().delete(url=f'{URL}/{invalid_gist_id}')
     assert res.status_code == 404
