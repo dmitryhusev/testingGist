@@ -11,8 +11,8 @@ class RequestBuilder:
             'X-GitHub-Api-Version': '2022-11-28'
         }
 
-    def get(self, url):
-        return requests.get(url=url, headers=self.headers)
+    def get(self, url, params=None):
+        return requests.get(url=url, headers=self.headers, params=params)
 
     def post(self, url, data):
         return requests.post(url=url, headers=self.headers, data=data)

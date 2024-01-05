@@ -1,16 +1,40 @@
 import pytest
-from src.utils import data_models
 from src.utils.factories.gist_factory import RequestGistFactory
+from src.utils.helpers import create_several_gists
 
 
 @pytest.fixture
 def create_gist():
     res = RequestGistFactory.post_gist()
-    assert res.status_code == 201, f'Gist is not created, status code is {res.status_code}'
-    yield data_models.Gist(
-        id_=res.json().get('id'),
-        url=res.json().get('url'),
-        file_name=res.json().get('files')
-    )
-    RequestGistFactory.delete_gist(res.json().get('id'))
+    yield res
+    RequestGistFactory.delete_gist(res.id_)
+
+
+@pytest.fixture
+def cleanup_gist():
+    gist_ids = []
+
+    def wrapper(*gists):
+        for gist in gists:
+            gist_ids.append(gist)
+    yield wrapper
+    [RequestGistFactory.delete_gist(id_) for id_ in gist_ids]
+
+
+@pytest.fixture
+def create_gists():
+    ids = []
+
+    def wrapper(amount):
+        inner_ids = create_several_gists(amount)
+        ids.extend(inner_ids)
+        return inner_ids
+    yield wrapper
+    if len(ids) > 0:
+        for id_ in ids:
+            RequestGistFactory.delete_gist(id_)
+
+
+
+
 
