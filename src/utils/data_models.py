@@ -6,6 +6,7 @@ class Gist(BaseModel):
     id_: constr(min_length=1)
     url: constr(min_length=1)
     file_name: dict
+    description: str
 
     @field_validator('file_name')
     def check_file_name_field(cls, v):

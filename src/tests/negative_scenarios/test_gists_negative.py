@@ -27,3 +27,10 @@ def test_public_gists_max_amount_exceeded():
     params = {'page': 101}
     res = RequestBuilder().get(url, params=params)
     assert res.status_code == 422
+
+
+def test_get_not_existing_gist():
+    invalid_gist_id = ''
+    url = f'https://api.github.com/gists/{invalid_gist_id}'
+    res = RequestBuilder().get(url)
+    assert res.status_code == 404

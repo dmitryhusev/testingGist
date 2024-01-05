@@ -30,15 +30,14 @@ class RequestGistFactory:
         body = body if body else payload
         res = RequestBuilder().post(cls.default_url, body)
         assert res.status_code == 201, f'Gist is not created, status code is {res.status_code}'
-        validated = validate_gist_creation(res)
+        validated = validate_gist(res)
         return validated
 
     @classmethod
-    def update_gist(cls, gist_id: str) -> data_models.Gist:
-        data = '{"description":"An updated gist description","files":{"README.md":{"content":"Hello World from GitHub"}}}'
-        res = RequestBuilder().update(url=f'{cls.default_url}/{gist_id}', data=data)
+    def update_gist(cls, gist_id: str, payload: dict) -> data_models.Gist:
+        res = RequestBuilder().update(url=f'{cls.default_url}/{gist_id}', data=payload)
         assert res.status_code == 200, f'Gist is not created, status code is {res.status_code}'
-        validated = validate_gist_creation(res)
+        validated = validate_gist(res)
         return validated
 
     @classmethod
@@ -47,10 +46,11 @@ class RequestGistFactory:
         assert res.status_code == 204
 
 
-def validate_gist_creation(response: requests.Response) -> data_models.Gist:
+def validate_gist(response: requests.Response) -> data_models.Gist:
     validated = data_models.Gist(
         id_=response.json().get('id'),
         url=response.json().get('url'),
-        file_name=response.json().get('files')
+        file_name=response.json().get('files'),
+        description=response.json().get('description')
     )
     return validated

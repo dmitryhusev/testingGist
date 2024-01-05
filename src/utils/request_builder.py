@@ -21,7 +21,7 @@ class RequestBuilder:
         return requests.post(url=url, headers=self.headers, json=data)
 
     def update(self, url, data):
-        return requests.patch(url=url, headers=self.headers, data=data)
+        return requests.patch(url=url, headers=self.headers, json=data)
 
     def delete(self, url):
         return requests.delete(url=url, headers=self.headers)

@@ -1,6 +1,7 @@
 import datetime
-from src.utils.factories.gist_factory import RequestGistFactory
+from src.utils.factories.gist_factory import RequestGistFactory, validate_gist
 from src.utils.helpers import create_several_gists
+from src.utils.request_builder import RequestBuilder
 
 
 def test_gists_for_authenticated_user(create_gists):
@@ -37,3 +38,13 @@ def test_gists_since(cleanup_gist):
     params = {'since': time}
     res = RequestGistFactory.get_all_gists(params=params)
     assert len(res) > 0
+
+
+def test_get_gist(create_gist):
+    gist = create_gist
+    url = f'https://api.github.com/gists/{gist.id_}'
+    res = RequestBuilder().get(url)
+    assert res.status_code == 200, f'Unable to get gist, current status code is {res.status_code}'
+    validate_gist(res)
+
+
