@@ -45,5 +45,5 @@ class RequestBuilder:
     @allure.step
     def delete_query(self, url):
         res = requests.delete(url=url, headers=self.headers)
-        make_attachment(res.text, 'response')
+        make_attachment(res.status_code, 'response')
         return res
