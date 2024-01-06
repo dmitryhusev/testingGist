@@ -12,8 +12,7 @@ pipeline {
         stage('Run tests'){
             steps {
                 sh ". venv/bin/activate"
-                sh "ls -l"
-                sh "python3 -m pytest $THREADS_NUMBER src/tests"
+                sh "python3 -m pytest -n $THREADS_NUMBER src/tests"
 
             }
         }
