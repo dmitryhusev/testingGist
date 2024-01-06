@@ -13,7 +13,7 @@ pipeline {
         stage('Run tests'){
             steps {
                 sh ". venv/bin/activate"
-                sh "pytest $THREADS_NUMBER"
+                sh "python3 -m pytest $THREADS_NUMBER"
 
             }
         }
