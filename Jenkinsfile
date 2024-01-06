@@ -11,6 +11,7 @@ pipeline {
         }
         stage('Run tests'){
             steps {
+                sh "source venv/bin/activate"
                 sh "pytest $THREADS_NUMBER"
 
             }
