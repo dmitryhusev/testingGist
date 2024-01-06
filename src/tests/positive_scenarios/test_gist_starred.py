@@ -6,7 +6,7 @@ def test_gist_star(create_gist):
     url = f'https://api.github.com/gists/{gist_id}/star'
     builder = RequestBuilder()
     builder.headers['Content-Length'] = '0'
-    res = builder.put(url)
+    res = builder.put_query(url)
     assert res.status_code == 204
 
 
@@ -15,8 +15,8 @@ def test_gist_unstar(create_gist):
     url = f'https://api.github.com/gists/{gist_id}/star'
     builder = RequestBuilder()
     builder.headers['Content-Length'] = '0'
-    res = builder.put(url)
+    res = builder.put_query(url)
     assert res.status_code == 204
-    res = builder.delete(url)
+    res = builder.delete_query(url)
     assert res.status_code == 204
 

@@ -43,6 +43,6 @@ def test_gists_since(cleanup_gist):
 def test_get_gist(create_gist):
     gist = create_gist
     url = f'https://api.github.com/gists/{gist.id_}'
-    res = RequestBuilder().get(url)
+    res = RequestBuilder().get_query(url)
     assert res.status_code == 200, f'Unable to get gist, current status code is {res.status_code}'
     validate_gist(res)
