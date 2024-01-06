@@ -43,3 +43,12 @@ Test coverage will be demonstrated via Allure report.
 `Test Harness`
 
 Custom framework (this repo)
+
+`Test execution`
+
+Go to this url: Jenkins service deployed in DigitalOcean
+
+Run job (the job itself is parametrized, specify number of treads and confirm). Github has its own limitation on parallel query execution. Less than 4 should be fine.
+
+To see results click on allure icon close to job link on the Jenkins main page. It should look like this ![alt allure](allure.png)
+
