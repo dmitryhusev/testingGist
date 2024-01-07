@@ -37,6 +37,7 @@ Custom framework (this repo)
 
 1. Go to this url: http://165.232.121.126:8080/job/gist_testing/ Jenkins service deployed in DigitalOcean
 2. Run job (the job itself is parametrized, specify number of treads and confirm). Github has its own limitation on parallel queries runs. Less than 4 should be fine
-3. To see results click on allure icon close to job link on the Jenkins job main page. It should look like this:
+3. Framework uses rerun failures mechanism in case of some tests are flaky, this parameter is also configurable, default value is 1
+4. To see results click on allure icon close to job link on the Jenkins job main page. It should look like this:
 
 ![alt allure](allure.png)
