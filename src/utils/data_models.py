@@ -3,6 +3,8 @@ import pytest
 
 
 class Gist(BaseModel):
+    # Class for gist response data validation
+
     id_: constr(min_length=1)
     url: constr(min_length=1)
     file_name: dict

@@ -17,7 +17,7 @@ Gists provide a simple way to share code snippets with others. Every gist is a G
 
 `Goals and Deliverables`
 
-1. Validate the SUT's feature set as specified, claimed, or otherwise made known to us
+1. Validate the SUT's
 2. Provide regression testing
 3. Document the test cases that we create to perform the feature validation: positive cases and negative cases
 4. Produce evidence of our test coverage
