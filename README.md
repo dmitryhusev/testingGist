@@ -35,7 +35,7 @@ Custom framework (this repo)
 
 `Test execution`
 
-1. Go to this url: http://165.232.121.126:8080/job/gist_testing/ Jenkins service deployed in DigitalOcean
+1. Go to this url: http://165.232.121.126:8080/job/gist_testing/ Jenkins service deployed in DigitalOcean (creds: admin/JenkinsAdmin8080)
 2. Run job (the job itself is parametrized, specify number of treads and confirm). Github has its own limitation on parallel queries runs. Less than 4 should be fine
 3. Framework uses rerun failures mechanism in case of some tests are flaky, this parameter is also configurable, default value is 1
 4. We can run tests using markers: pytest -m "negative" to run negative test cases or pytest -m "not negative" to run positive test cases. Use MARKER parameter to choose correct option
