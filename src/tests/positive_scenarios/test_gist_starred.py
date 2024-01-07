@@ -1,9 +1,10 @@
 from src.utils.request_builder import RequestBuilder
+from src.settings import DEFAULT_URL
 
 
 def test_gist_star(create_gist):
     gist_id = create_gist.id_
-    url = f'https://api.github.com/gists/{gist_id}/star'
+    url = f'{DEFAULT_URL}/{gist_id}/star'
     builder = RequestBuilder()
     builder.headers['Content-Length'] = '0'
     res = builder.put_query(url)
@@ -12,7 +13,7 @@ def test_gist_star(create_gist):
 
 def test_gist_unstar(create_gist):
     gist_id = create_gist.id_
-    url = f'https://api.github.com/gists/{gist_id}/star'
+    url = f'{DEFAULT_URL}/{gist_id}/star'
     builder = RequestBuilder()
     builder.headers['Content-Length'] = '0'
     res = builder.put_query(url)

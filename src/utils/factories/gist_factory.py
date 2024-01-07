@@ -2,15 +2,16 @@ import requests
 import allure
 from src.utils import data_models
 from src.utils.request_builder import RequestBuilder
+from src.settings import DEFAULT_URL
 
 
 class RequestGistFactory:
-    default_url = 'https://api.github.com/gists'
+
     error_message = 'Invalid request, status code: is %s, message: %s'
 
     @classmethod
     def get_all_gists(cls, url: str = None, params: dict | None = None):
-        url = url if url else cls.default_url
+        url = url if url else DEFAULT_URL
         res = RequestBuilder().get_query(url, params=params)
         assert res.status_code == 200, cls.error_message % (res.status_code, res.text)
         return [i['id'] for i in res.json()]
@@ -29,21 +30,21 @@ class RequestGistFactory:
                 }
         }
         body = body if body else payload
-        res = RequestBuilder().post_query(cls.default_url, body)
+        res = RequestBuilder().post_query(DEFAULT_URL, body)
         assert res.status_code == 201, cls.error_message % (res.status_code, res.text)
         validated = validate_gist(res)
         return validated
 
     @classmethod
     def update_gist(cls, gist_id: str, payload: dict) -> data_models.Gist:
-        res = RequestBuilder().update_query(url=f'{cls.default_url}/{gist_id}', data=payload)
+        res = RequestBuilder().update_query(url=f'{DEFAULT_URL}/{gist_id}', data=payload)
         assert res.status_code == 200, cls.error_message % (res.status_code, res.text)
         validated = validate_gist(res)
         return validated
 
     @classmethod
     def delete_gist(cls, gist_id):
-        res = RequestBuilder().delete_query(url=f'{cls.default_url}/{gist_id}')
+        res = RequestBuilder().delete_query(url=f'{DEFAULT_URL}/{gist_id}')
         assert res.status_code == 204, cls.error_message % (res.status_code, res.text)
 
 @allure.step
